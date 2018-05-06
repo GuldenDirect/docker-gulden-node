@@ -1,0 +1,27 @@
+# This Dockerfile contains useful commands to build the Gulden node
+# Version 16.04 of Ubuntu will be used (secure and up-to-date)
+FROM ubuntu:16.04
+
+# Install the necessary software packages
+RUN apt-get update && apt-get -y upgrade && apt-get install -y nginx wget tar cron nano curl sudo htop
+
+# Create the guldenserver directory
+RUN mkdir /guldenserver
+RUN cd /guldenserver
+
+# Download the Gulden node software
+RUN wget https://github.com/Gulden/gulden-official/releases/download/v1.6.4.10/Gulden-1.6.4.10-x86_64-linux.tar.gz -P /guldenserver/
+RUN tar -xvf /guldenserver/Gulden-1.6.4.10-x86_64-linux.tar.gz -C /guldenserver && rm /guldenserver/Gulden-1.6.4.10-x86_64-linux.tar.gz
+RUN mkdir /guldenserver/datadir
+RUN printf "disablewallet=0 \nmaxconnections=20 \nrpcuser=santa \nrpcpassword=secret" > /guldenserver/datadir/Gulden.conf
+RUN echo "/guldenserver/Gulden-cli -datadir=/guldenserver/datadir getpeerinfo | curl -X POST -H 'Content-Type:application/json' -d @- https://guldennodes.com/endpoint/" > /guldenserver/cronGuldennodes.sh
+RUN (crontab -l ; echo "*/30 * * * * /guldenserver/cronGuldennodes.sh")| crontab -
+RUN echo "nohup /guldenserver/GuldenD -datadir=/guldenserver/datadir &" >> /etc/rc.local
+#Ignore the no crontab for root, the command below succeeds anyway
+RUN echo "nohup /guldenserver/GuldenD -datadir=/guldenserver/datadir &" > /guldenserver/runGuldenServer.sh
+VOLUME /guldenserver/datadir
+RUN sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/myssl.key -out /etc/ssl/certs/myssl.crt -subj "/C=NL/ST=Utrecht/L=Utrecht/O=GuldenDirect/OU=De Bazen/CN=guldendirect.nl"
+RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+RUN wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/iTosun/nginx-reverse/master/nginx.conf
+RUN /etc/init.d/nginx restart
+CMD ["bash /guldenserver/runGuldenServer.sh"]
