@@ -7,9 +7,9 @@ the command -p option will publish the nginx so you can interact with the node
 
 Then you can communicate with the gulden node with HTTP requests like this below:
 
-'''
+```
 curl -i https://node-ip-or-fqdn -u "santa:secret" -d '{"method":"help","params":[],"id":1}'
-'''
+```
 
 # Important to change the following
 Be sure the change the RPC user and password in /guldenserver/datadir/Gulden.conf for security reasons
