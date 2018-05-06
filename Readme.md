@@ -2,7 +2,7 @@
 To start the docker just run:
 
 ```
-docker run -p 127.0.0.1::443 gulden:node
+nohup docker run -p 127.0.0.1:443:443 gulden:node &
 ```
 
 the command -p option will publish the nginx so you can interact with the node
