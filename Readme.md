@@ -1,7 +1,9 @@
 # How to start docker
 To start the docker just run:
 
-docker run -p 443:443/tcp -it gulden:node
+```
+docker run -p 127.0.0.1::443 -it gulden:node
+```
 
 the command -p option will publish the nginx so you can interact with the node
 
