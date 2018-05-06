@@ -19,7 +19,7 @@ Be sure the change the RPC user and password in /guldenserver/datadir/Gulden.con
 If the container is already running you can use the following commands:
 
 ```
-docker exec <container id> printf "disablewallet=0 \nmaxconnections=20 \nrpcuser=<user> \nrpcpassword=***<password>***" > /guldenserver/datadir/Gulden.conf
+docker exec <container id> printf "disablewallet=0 \nmaxconnections=20 \nrpcuser=<user> \nrpcpassword=<password>" > /guldenserver/datadir/Gulden.conf
 curl -k -i https://127.0.0.1 -u "santa:secret" -d '{"method":"stop","params":[],"id":1}'
 docker restart <container id>
 ```
