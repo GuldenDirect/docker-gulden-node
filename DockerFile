@@ -24,4 +24,4 @@ RUN sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/pr
 RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
 RUN wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/iTosun/nginx-reverse/master/nginx.conf
 RUN /etc/init.d/nginx restart
-CMD ["/guldenserver/GuldenD" "-datadir=/guldenserver/datadir"]
+CMD ["/guldenserver/GuldenD", "-datadir=/guldenserver/datadir"]
