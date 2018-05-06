@@ -23,5 +23,5 @@ VOLUME /guldenserver/datadir
 RUN sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/myssl.key -out /etc/ssl/certs/myssl.crt -subj "/C=NL/ST=Utrecht/L=Utrecht/O=GuldenDirect/OU=De Bazen/CN=guldendirect.nl"
 RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
 RUN wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/iTosun/nginx-reverse/master/nginx.conf
-RUN /etc/init.d/nginx restart
-CMD ["/guldenserver/GuldenD", "-datadir=/guldenserver/datadir"]
+RUN service nginx restart
+CMD ["service nginx restart", "&& /guldenserver/GuldenD", "-datadir=/guldenserver/datadir"]
