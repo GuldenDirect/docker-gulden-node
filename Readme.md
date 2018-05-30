@@ -2,7 +2,7 @@
 You have to prepare the container before it is ready to get launched.
 
 ```
-docker build -f Dockerfile -t guldendirect/node:1.0
+docker build -f Dockerfile -t gulden:node
 ```
 # How to start docker
 To start the docker just run:
