@@ -31,5 +31,4 @@ docker restart <container id>
 ```
 
 # Why does the build take so long?
-
 Because we generate new Diffie-Hellman parameters to mitigate CVE-2015-4000 (LOGJAM attack)

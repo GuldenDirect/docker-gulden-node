@@ -19,7 +19,7 @@ RUN echo "/guldenserver/Gulden-cli -datadir=/guldenserver/datadir getpeerinfo | 
 RUN (crontab -l ; echo "*/30 * * * * /guldenserver/cronGuldennodes.sh")| crontab -
 RUN echo "nohup /guldenserver/GuldenD -datadir=/guldenserver/datadir &" >> /etc/rc.local
 VOLUME /guldenserver/datadir
-RUN sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/myssl.key -out /etc/ssl/certs/myssl.crt -subj "/C=NL/ST=Utrecht/L=Utrecht/O=GuldenDirect/OU=De Bazen/CN=guldendirect.nl"
+RUN sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/myssl.key -out /etc/ssl/certs/myssl.crt -subj "/C=NL/ST=Utrecht/L=Utrecht/O=GuldenDirect/OU=Developers/CN=guldendirect.nl"
 RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
 # RUN wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/iTosun/nginx-reverse/master/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
